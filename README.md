@@ -1,0 +1,2 @@
+# luck
+a luck project
