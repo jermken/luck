@@ -11,22 +11,47 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="luck.js"></script>
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        input {
+            outline: none;
+        }
+
+        .input-wrap {
+            display: flex;
+        }
+
+        .input-wrap input {
+            flex: 1;
+        }
+
+        .input-wrap input:not(:first) {
+            margin-left: 20px;
+        }
+
         .input {
-            width: 80px;
             height: 28px;
+            font-size: 18px;
         }
     </style>
 </head>
 
 <body>
-    <div>
-        <input class="input" />
-        <input class="input" />
-        <input class="input" />
+    <div class="input-wrap">
         <input class="input" />
         <input class="input" />
         <input class="input" />
     </div>
+
+    <div class="input-wrap">
+        <input class="input" />
+        <input class="input" />
+        <input class="input" />
+    </div>
+
     <div>
         <input class="input" />
     </div>
