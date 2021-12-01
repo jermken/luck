@@ -22,41 +22,159 @@
 
         .input-wrap {
             display: flex;
+            width: 100%;
         }
 
         .input-wrap input {
             flex: 1;
+            width: inherit;
         }
 
-        .input-wrap input:not(:first) {
-            margin-left: 20px;
+        .input-wrap input {
+            margin: 10px;
         }
 
         .input {
             height: 28px;
             font-size: 18px;
         }
+
+        .blue {
+            margin-top: 20px;
+        }
+
+        .blue input {
+            width: calc((100% - 60px) / 3);
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+
+        .text {
+            margin-left: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-wrap {
+            position: fixed;
+            width: 100%;
+            bottom: 36px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            width: 50%;
+            height: 36px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            display: block;
+            background-color: #0CCCC3;
+            color: white;
+        }
+
+        .btn:active {
+            opacity: 0.7;
+        }
+
+        .result {
+            font-size: 18px;
+            font-weight: bold;
+            color: red;
+            line-height: 1.5;
+            text-align: center;
+            font-style: italic;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="input-wrap">
-        <input class="input" />
-        <input class="input" />
-        <input class="input" />
+    <div class="red">
+        <div class="text" style="color: red;">红色：</div>
+        <div class="input-wrap">
+            <input class="input" type="number" />
+            <input class="input" type="number" />
+            <input class="input" type="number" />
+        </div>
+
+        <div class="input-wrap">
+            <input class="input" type="number" />
+            <input class="input" type="number" />
+            <input class="input" type="number" />
+        </div>
     </div>
 
-    <div class="input-wrap">
-        <input class="input" />
-        <input class="input" />
-        <input class="input" />
+    <div class="blue">
+        <div class="text" style="color: blue;">蓝色：</div>
+        <input class="input" type="number" id="blue" />
     </div>
 
-    <div>
-        <input class="input" />
+    <div class="result"></div>
+
+    <div class="btn-wrap">
+        <button class="btn" id="btn">查询</button>
     </div>
     <script>
+        // 一等奖：中6+1，高等奖奖金的75%与奖池奖金之和除以中奖注数。
 
+        // 二等奖：中6+0，高等奖奖金的25%除以中奖注数。
+
+        // 三等奖：中5+1，3000元。
+
+        // 四等奖：中5+0、中4+1，200元。
+
+        // 五等奖：中4+0、中3+1，10元。
+
+        // 六等奖：中2+1、中1+1、中0+1，5元。
+        $('#btn').on('click', function () {
+            var result = [];
+
+            var reds = [];
+            var blue = $('.blue input').val();
+
+            _.each($('.red input'), function (input) {
+                reds.push($(input).val())
+            })
+
+            if (blue === '12') {
+
+                luckData.forEach(function (luck) {
+                    var num = _.difference(luck, reds).length;
+                    if (num === 0) {
+                        result.push('一等奖')
+                    } else if (num === 1) {
+                        result.push('三等奖')
+                    } else if (num === 2) {
+                        result.push('四等奖')
+                    } else if (num === 3) {
+                        result.push('五等奖')
+                    } else {
+                        result.push('六等奖')
+                    }
+                })
+
+            } else {
+                luckData.forEach(function (luck) {
+                    var num = _.difference(luck, reds).length;
+                    if (num === 0) {
+                        result.push('二等奖')
+                    } else if (num === 1) {
+                        result.push('四等奖')
+                    } else if (num === 2) {
+                        result.push('五等奖')
+                    }
+                })
+            }
+
+            if (result.length) {
+                $('.result').text(`恭喜中得：${result.join('、')}`)
+            } else {
+                $('.result').text('')
+            }
+        })
     </script>
 </body>
 
