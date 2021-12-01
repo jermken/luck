@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"
+		integrity="sha512-ZuOjyqq409+q6uc49UiBF3fTeyRyP8Qs0Jf/7FxH5LfhqBMzrR5cwbpDA4BgzSo884w6q/+oNdIeHenOqhISGw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="format.js"></script>
+	<script src="data.js"></script>
+</head>
+
+<body>
+	<script>
+		// '01-06-07-12-22-26-32'  '01-06-09-12-22-26-32' '01-07-09-12-22-26-32'
+		//
+		// 蓝色 12 出现概率最大
+		// 红色最大值超过21的概率最大
+		let strArr = source.map((a) => (a.join('-')))
+		console.log(`~~~~${isRepeatArray(strArr) ? '小心啊！！！！ ' : '不'}存在重复项~~~~`)
+		console.log('blue rate', getBlueSingleRate(source))
+		console.log('red rate', getRedSingleRate(source))
+		// '01-06-07-09-12-14-12'
+		let strs = source.map((a) => a.join('-'))
+		let sArr = 0
+		let mArr = 0
+		let lArr = 0
+		let blue2red = 0
+
+
+		// 红色均匀分布概率 539
+		let ave1 = 0
+
+
+		// 中间空缺概率 26
+		let ave2 = 0
+
+
+		// 3个在小 559
+		let ave3 = 0
+
+
+		// 2个在小 1001
+		let ave4 = 0
+
+
+		// 3小1中2大 251
+		let ave5 = 0
+
+
+		// 3小2中1大 172
+		let ave6 = 0
+
+
+		// 3小3中 48
+		let ave7 = 0
+
+
+		// 2小1中3大 713
+		let ave8 = 0
+
+
+		// 2小2中2大 673
+		let ave9 = 0
+
+
+		// 2小3中1大
+		let ave10 = 0
+
+
+		// 06 07同时 77
+		let ave11 = 0
+
+		// 06 09同时 60
+		let ave12 = 0
+
+
+		// 07 09同时 73
+		let ave13 = 0
+
+		let ave14 = 0
+		let ave15 = 0
+		let ave16 = 0
+
+		// 跟历史数据重复个数最多的值
+		let ave17 = 0
+
+		// 历史数据红球重合数
+		let ave18 = 0
+
+		// 历史数据红球重合最多数
+		let ave19 = 0
+
+		// 红球重合数6，5
+
+		source.forEach((a) => {
+			if (+a[5] < 11) {
+				sArr++;
+			} else if (+a[5] > 10 && +a[5] < 21) {
+				mArr++;
+			} else {
+				lArr++;
+				if (a[6] === '12') {
+					blue2red++;
+				}
+			}
+
+			if (+a[1] < 11 && +a[2] > 10 && +a[3] < 21 && +a[4] > 21) {
+				ave1++;
+			}
+
+			if (+a[3] < 11 && +a[4] > 21) {
+				ave2++;
+			}
+			if (+a[2] < 11 && +a[3] > 10) {
+				ave3++;
+			}
+			if (+a[1] < 11 && +a[2] > 10) {
+				ave4++;
+			}
+
+			if (+a[2] < 11 && +a[3] > 10 && +a[3] < 21 && +a[4] > 20) {
+				ave5++;
+			}
+
+			if (+a[2] < 11 && +a[3] > 10 && +a[4] < 21 && +a[5] > 20) {
+				ave6++;
+			}
+
+			if (+a[2] < 11 && +a[3] > 10 && +a[5] < 21) {
+				ave7++;
+			}
+
+			if (+[1] < 11 && +a[2] > 10 && +a[2] < 21 && +a[3] > 20) {
+				ave8++;
+			}
+
+			if (+[1] < 11 && +a[2] > 10 && +a[3] < 21 && +a[4] > 20) {
+				ave9++;
+			}
+
+			if (+[1] < 11 && +a[2] > 10 && +a[4] < 21 && +a[5] > 20) {
+				ave10++;
+			}
+
+			if (a.slice(0, a.length - 1).indexOf('06') > -1 && a.slice(0, a.length - 1).indexOf('07') > -1) {
+				ave11++;
+			}
+			if (a.slice(0, a.length - 1).indexOf('06') > -1 && a.slice(0, a.length - 1).indexOf('09') > -1) {
+				ave12++;
+			}
+			if (a.slice(0, a.length - 1).indexOf('07') > -1 && a.slice(0, a.length - 1).indexOf('09') > -1) {
+				ave13++;
+			}
+
+			// if (a.join('-') === '01-06-12-22-26-32-12') {
+			// 	ave14++;
+			// }
+
+			// if (a.join('-') === '01-07-12-22-26-32-12') {
+			// 	ave15++;
+			// }
+
+			// if (a.join('-') === '01-09-12-22-26-32-12') {
+			// 	ave16++;
+			// }
+
+			if (a.join('-') === '01-06-12-22-26-32-01') {
+				ave14++;
+			}
+
+			if (a.join('-') === '01-07-12-22-26-32-01') {
+				ave15++;
+			}
+
+			if (a.join('-') === '01-09-12-22-26-32-01') {
+				ave16++;
+			}
+
+			if (a[0] === '01' && a[6] === '01') {
+				ave16++;
+			}
+		})
+		// 红球 01 06 12 22 27 32 蓝球 12
+		// 红球 01 07 12 22 27 32 蓝球 12
+		// 红球 01 09 12 22 27 32 蓝球 12
+		let initNum = 0;//['01', '06', '12', '22', '27', '32'] ['01', '07', '12', '22', '27', '32'] ['01', '09', '12', '22', '27', '32']
+		source.forEach((arr) => {
+			let _arr = arr.slice(0, arr.length - 1)
+			let num = 0;
+			_arr.forEach((a) => {
+				if (['01', '06', '12', '22', '27', '32'].includes(a)) {
+					num++;
+				}
+			})
+			if (num >= 5) {
+				console.log(arr, 11111)
+			}
+			if (num > initNum) {
+				initNum = num
+			}
+		})
+		let ab = 0;
+		let test = source.map((arr) => {
+			return arr.slice(0, arr.length - 1).join('-')
+		}).forEach((a) => {
+			if (a.indexOf('22-27-32') > -1) {
+				ab++;
+			}
+		})
+		let mp = {}
+		source.forEach((arr) => {
+			let odd = 0;
+			let even = 0;
+			arr.slice(0, arr.length - 1).forEach((a) => {
+				if ((+a) % 2) {
+					odd++;
+				} else {
+					even++;
+				}
+			})
+			if (mp[`${odd}/${even}`]) {
+				mp[`${odd}/${even}`] += 1;
+			} else {
+				mp[`${odd}/${even}`] = 1;
+			}
+		})
+		//console.log(Array.from(new Set(test)), 333)
+		//console.log(duplicates(test), 9999)
+	</script>
+</body>
+
+</html>
